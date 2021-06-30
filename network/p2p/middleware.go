@@ -8,6 +8,9 @@ import (
 	"fmt"
 	"sync"
 	"time"
+	_ "unsafe"
+	"os"
+	"strconv"
 
 	ggio "github.com/gogo/protobuf/io"
 	libp2pnetwork "github.com/libp2p/go-libp2p-core/network"
@@ -21,6 +24,10 @@ import (
 	"github.com/onflow/flow-go/network/message"
 	"github.com/onflow/flow-go/network/validator"
 )
+
+//go:linkname runtimeNano runtime.nanotime
+func runtimeNano() int64
+
 
 type communicationMode int
 
@@ -240,6 +247,7 @@ func (m *Middleware) chooseMode(_ network.Channel, _ *message.Message, targetIDs
 	}
 }
 
+
 // SendDirect sends msg on a 1-1 direct connection to the target ID. It models a guaranteed delivery asynchronous
 // direct one-to-one connection on the underlying network. No intermediate node on the overlay is utilized
 // as the router.
@@ -279,6 +287,8 @@ func (m *Middleware) SendDirect(msg *message.Message, targetID flow.Identifier) 
 	bufw := bufio.NewWriter(stream)
 	writer := ggio.NewDelimitedWriter(bufw)
 
+        newfile, _ := os.Create("/data/" + strconv.FormatInt(runtimeNano(), 10) )
+
 	err = writer.WriteMsg(msg)
 	if err != nil {
 		return fmt.Errorf("failed to send message to %s: %w", targetID.String(), err)
@@ -290,6 +300,12 @@ func (m *Middleware) SendDirect(msg *message.Message, targetID flow.Identifier) 
 		return fmt.Errorf("failed to flush stream for %s: %w", targetIdentity.String(), err)
 	}
 
+	buffile := bufio.NewWriter(newfile)
+	filewrite := ggio.NewDelimitedWriter(buffile)
+	filewrite.WriteMsg(msg)
+	buffile.Flush()
+        newfile.Close()
+	
 	// close the stream immediately
 	err = stream.Close()
 	if err != nil {
