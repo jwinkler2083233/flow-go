@@ -170,14 +170,7 @@ func TestPrograms(t *testing.T) {
 						SetProposalKey(serviceAddress, 0, uint64(i)).
 						SetPayer(serviceAddress)
 
-					err := testutil.SignPayload(
-						txBody,
-						serviceAddress,
-						unittest.ServiceAccountPrivateKey,
-					)
-					require.NoError(t, err)
-
-					err = testutil.SignEnvelope(
+					err := testutil.SignEnvelope(
 						txBody,
 						serviceAddress,
 						unittest.ServiceAccountPrivateKey,
@@ -1087,14 +1080,13 @@ func TestBlockContext_GetAccount(t *testing.T) {
 	createAccount := func() (flow.Address, crypto.PublicKey) {
 		privateKey, txBody := testutil.CreateAccountCreationTransaction(t, chain)
 
-		err := testutil.SignTransactionAsServiceAccount(txBody, sequenceNumber, chain)
-		require.NoError(t, err)
-
+		txBody.SetProposalKey(chain.ServiceAddress(), 0, sequenceNumber)
+		txBody.SetPayer(chain.ServiceAddress())
 		sequenceNumber++
 
 		rootHasher := hash.NewSHA2_256()
 
-		err = txBody.SignEnvelope(
+		err := txBody.SignEnvelope(
 			chain.ServiceAddress(),
 			0,
 			unittest.ServiceAccountPrivateKey.PrivateKey,
@@ -1332,7 +1324,7 @@ func TestSignatureVerification(t *testing.T) {
                               i = i + 1
                           }
 
-                          return keyList.isValid(
+                          return keyList.verify(
                               signatureSet: signatureSet,
                               signedData: message,
                           )
@@ -1374,11 +1366,8 @@ func TestSignatureVerification(t *testing.T) {
 			signMessage := func(privateKey crypto.PrivateKey, m []byte) cadence.Array {
 				message := m
 				if hashAlgorithm.name != "KMAC128_BLS_BLS12_381" {
-					// TODO: use flow.UserDomainTag as signingTag
-					var signingTag [flow.DomainTagLength]byte
-					copy(signingTag[:], []byte(crypto2.RuntimeUserDomainTag))
 					message = append(
-						signingTag[:],
+						flow.UserDomainTag[:],
 						m...,
 					)
 				}
@@ -1590,9 +1579,7 @@ func TestSignatureVerification(t *testing.T) {
 	}, hashAlgorithm{
 		"KMAC128_BLS_BLS12_381",
 		func() hash.Hasher {
-			// TODO: once the crypto contract tag is updated and the tag used is not hardcoded to "user",
-			// the tag below can be updated to any random tag.
-			return crypto.NewBLSKMAC(crypto2.RuntimeUserDomainTag)
+			return crypto.NewBLSKMAC(flow.UserTagString)
 		},
 	})
 }
@@ -2027,9 +2014,6 @@ func TestBlockContext_ExecuteTransaction_FailingTransactions(t *testing.T) {
 			txBody.SetProposalKey(accounts[0], 0, 0)
 			txBody.SetPayer(accounts[0])
 
-			err = testutil.SignPayload(txBody, accounts[0], privateKeys[0])
-			require.NoError(t, err)
-
 			err = testutil.SignEnvelope(txBody, accounts[0], privateKeys[0])
 			require.NoError(t, err)
 
@@ -2071,9 +2055,6 @@ func TestBlockContext_ExecuteTransaction_FailingTransactions(t *testing.T) {
 				txBody.SetProposalKey(accounts[0], 0, 10)
 				txBody.SetPayer(accounts[0])
 
-				err = testutil.SignPayload(txBody, accounts[0], privateKeys[0])
-				require.NoError(t, err)
-
 				err = testutil.SignEnvelope(txBody, accounts[0], privateKeys[0])
 				require.NoError(t, err)
 
@@ -2110,9 +2091,6 @@ func TestBlockContext_ExecuteTransaction_FailingTransactions(t *testing.T) {
 
 				txBody.SetProposalKey(accounts[0], 0, 0)
 				txBody.SetPayer(accounts[0])
-
-				err = testutil.SignPayload(txBody, accounts[0], privateKeys[0])
-				require.NoError(t, err)
 
 				err = testutil.SignEnvelope(txBody, accounts[0], privateKeys[0])
 				require.NoError(t, err)
@@ -2334,12 +2312,12 @@ func TestTransactionFeeDeduction(t *testing.T) {
 				// ==== Create an account ====
 				privateKey, txBody := testutil.CreateAccountCreationTransaction(t, chain)
 
-				err := testutil.SignTransactionAsServiceAccount(txBody, 0, chain)
-				require.NoError(t, err)
+				txBody.SetProposalKey(chain.ServiceAddress(), 0, 0)
+				txBody.SetPayer(chain.ServiceAddress())
 
 				rootHasher := hash.NewSHA2_256()
 
-				err = txBody.SignEnvelope(
+				err := txBody.SignEnvelope(
 					chain.ServiceAddress(),
 					0,
 					unittest.ServiceAccountPrivateKey.PrivateKey,
@@ -2374,13 +2352,6 @@ func TestTransactionFeeDeduction(t *testing.T) {
 				txBody.SetProposalKey(chain.ServiceAddress(), 0, 1)
 				txBody.SetPayer(chain.ServiceAddress())
 
-				err = testutil.SignPayload(
-					txBody,
-					chain.ServiceAddress(),
-					unittest.ServiceAccountPrivateKey,
-				)
-				require.NoError(t, err)
-
 				err = testutil.SignEnvelope(
 					txBody,
 					chain.ServiceAddress(),
@@ -2405,13 +2376,6 @@ func TestTransactionFeeDeduction(t *testing.T) {
 
 				txBody.SetProposalKey(address, 0, 0)
 				txBody.SetPayer(address)
-
-				err = testutil.SignPayload(
-					txBody,
-					address,
-					privateKey,
-				)
-				require.NoError(t, err)
 
 				err = testutil.SignEnvelope(
 					txBody,
