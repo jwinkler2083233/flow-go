@@ -25,7 +25,7 @@ var logfile_execresult *os.File
 // ID returns the hash of the execution result body
 func (er ExecutionResult) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/executionresult_id.log")
+		newfile, _ := os.Create("/data/executionresult_id.log")
 		logfile_execresult = newfile
 	})
 	ts := monotime.Now()
@@ -40,7 +40,7 @@ var logfile_execresult_chk *os.File
 // Checksum ...
 func (er ExecutionResult) Checksum() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/executionresult_chk.log")
+		newfile, _ := os.Create("/data/executionresult_chk.log")
 		logfile_execresult_chk = newfile
 	})
 	ts := monotime.Now()

@@ -33,7 +33,7 @@ var logfile_chunk_id *os.File
 // ID returns a unique id for this entity
 func (ch *Chunk) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/chunk_id.log")
+		newfile, _ := os.Create("/data/chunk_id.log")
 		logfile_chunk_id = newfile
 	})
 	ts := monotime.Now()
@@ -50,7 +50,7 @@ var logfile_chunk_chk *os.File
 func (ch *Chunk) Checksum() Identifier {
 
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/chunk_chk.log")
+		newfile, _ := os.Create("/data/chunk_chk.log")
 		logfile_chunk_chk = newfile
 	})
 	ts := monotime.Now()
@@ -86,7 +86,7 @@ var logfile_chunk_chk2 *os.File
 func (c *ChunkDataPack) Checksum() Identifier {
 
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/chunk_chk2.log")
+		newfile, _ := os.Create("/data/chunk_chk2.log")
 		logfile_chunk_chk2 = newfile
 	})
 	ts := monotime.Now()

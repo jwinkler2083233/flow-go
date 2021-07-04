@@ -23,7 +23,7 @@ var logfile_chunklocat_id *os.File
 // ID returns a unique id for chunk locator.
 func (c Locator) ID() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/chunks/chunklocator_id.log")
+		newfile, _ := os.Create("/data/chunklocator_id.log")
 		logfile_chunklocat_id = newfile
 	})
 	ts := monotime.Now()
@@ -38,7 +38,7 @@ var logfile_chunklocat_chk * os.File
 // Checksum provides a cryptographic commitment for a chunk locator content.
 func (c Locator) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/chunks/chunklocator_chk.log")
+		newfile, _ := os.Create("/data/chunklocator_chk.log")
 		logfile_chunklocat_chk = newfile
 	})
 	ts := monotime.Now()

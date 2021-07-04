@@ -31,7 +31,7 @@ var logfile_identity *os.File
 // ID returns checksum of identifier
 func (id IdEntity) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/module/mempool/model/id_entity.log")
+		newfile, _ := os.Create("/data/id_entity.log")
 		logfile_identity = newfile
 	})
 	ts := monotime.Now()

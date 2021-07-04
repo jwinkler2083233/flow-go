@@ -75,7 +75,7 @@ var logfile_seal_id *os.File
 
 func (s Seal) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/seal_id.log")
+		newfile, _ := os.Create("/data/seal_id.log")
 		logfile_seal_id = newfile
 	})
 	ts := monotime.Now()
@@ -90,7 +90,7 @@ var logfile_seal_chk *os.File
 
 func (s Seal) Checksum() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/seal_chk.log")
+		newfile, _ := os.Create("/data/seal_chk.log")
 		logfile_seal_chk = newfile
 	})
 	ts := monotime.Now()

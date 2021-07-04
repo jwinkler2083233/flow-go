@@ -24,7 +24,7 @@ var logfile_vote *os.File
 // ID returns the identifier for the vote.
 func (uv *Vote) ID() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/consensus/hotstuff/model/vote.log")
+		newfile, _ := os.Create("/data/vote.log")
 		logfile_vote = newfile
 	})
 	ts := monotime.Now()

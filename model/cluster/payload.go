@@ -60,7 +60,7 @@ var logfile_payload *os.File
 // Hash returns the hash of the payload.
 func (p Payload) Hash() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/cluster/payload.log")
+		newfile, _ := os.Create("/data/payload.log")
 		logfile_payload = newfile
 	})
 	ts := monotime.Now()

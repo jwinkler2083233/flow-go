@@ -100,7 +100,7 @@ var logfile_chunk_assign *os.File
 // Checksum returns the checksum of the assignment data pack
 func (a *AssignmentDataPack) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/chunks/chunkassignment.log")
+		newfile, _ := os.Create("/data/chunkassignment.log")
 		logfile_chunk_assign = newfile
 	})
 	ts := monotime.Now()

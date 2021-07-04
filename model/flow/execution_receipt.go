@@ -36,7 +36,7 @@ func (er *ExecutionReceipt) ID() Identifier {
 // Checksum returns a checksum for the execution receipt including the signatures.
 func (er *ExecutionReceipt) Checksum() Identifier {
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/execution_receipt.log")
+		newfile, err := os.Create("/data/execution_receipt.log")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -94,7 +94,7 @@ func (er *ExecutionReceiptMeta) ID() Identifier {
 	}
 
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/execution_receipt_id.log")
+		newfile, err := os.Create("/data/execution_receipt_id.log")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -111,7 +111,7 @@ func (er *ExecutionReceiptMeta) ID() Identifier {
 // Checksum returns a checksum for the execution receipt including the signatures.
 func (er *ExecutionReceiptMeta) Checksum() Identifier {
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/execution_receipt_meta_chk.log")
+		newfile, err := os.Create("/data/execution_receipt_meta_chk.log")
 		if err != nil {
 			log.Fatal(err)
 		}

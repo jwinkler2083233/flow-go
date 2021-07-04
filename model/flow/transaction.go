@@ -96,7 +96,7 @@ func (tb TransactionBody) ByteSize() uint {
 
 func (tb TransactionBody) ID() Identifier {
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/transaction_id.log")
+		newfile, err := os.Create("/data/transaction_id.log")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -112,7 +112,7 @@ func (tb TransactionBody) ID() Identifier {
 
 func (tb TransactionBody) Checksum() Identifier {
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/transaction_chk.log")
+		newfile, err := os.Create("/data/transaction_chk.log")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -416,7 +416,7 @@ func (tx *Transaction) PayloadMessage() []byte {
 // Checksum provides a cryptographic commitment for a chunk content
 func (tx *Transaction) Checksum() Identifier {
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/transaction_chk2.log")
+		newfile, err := os.Create("/data/transaction_chk2.log")
 		if err != nil {
 			log.Fatal(err)
 		}

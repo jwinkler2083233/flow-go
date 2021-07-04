@@ -71,7 +71,7 @@ func (h Header) ID() Identifier {
 		h.Timestamp = h.Timestamp.UTC()
 	}
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/header.log")
+		newfile, _ := os.Create("/data/header.log")
 		logfile_hdr = newfile
 	})
 
@@ -89,7 +89,7 @@ var logfile_hdr_chk *os.File
 func (h Header) Checksum() Identifier {
 
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/header_chk.log")
+		newfile, _ := os.Create("/data/header_chk.log")
 		logfile_hdr_chk = newfile
 	})
 

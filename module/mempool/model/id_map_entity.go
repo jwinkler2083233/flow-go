@@ -28,7 +28,7 @@ var logfile_mapentity *os.File
 // in mempools and storage. It makes the id of the entire IdMapEntity.
 func (id IdMapEntity) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/module/mempool/id_map_entity.log")
+		newfile, _ := os.Create("/data/id_map_entity.log")
 		logfile_mapentity = newfile
 	})
 	ts := monotime.Now()

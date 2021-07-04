@@ -52,7 +52,7 @@ var logfile_conduit *os.File
 func (cl ChannelList) ID() flow.Identifier {
 	sort.Sort(cl)
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/network/conduit.log")
+		newfile, _ := os.Create("/data/conduit.log")
 		logfile_conduit = newfile
 	})
 	ts := monotime.Now()

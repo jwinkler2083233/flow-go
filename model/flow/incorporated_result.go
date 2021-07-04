@@ -34,7 +34,7 @@ var logfile_inc_result *os.File
 // being stored directly in mempools and storage.
 func (ir *IncorporatedResult) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/incorporated_result.log")
+		newfile, _ := os.Create("/data/incorporated_result.log")
 
 		logfile_inc_result = newfile
 	})
@@ -53,7 +53,7 @@ var logfile_inc_result_chk *os.File
 // capable of being stored directly in mempools and storage.
 func (ir *IncorporatedResult) Checksum() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/incorporated_result_chk.log")
+		newfile, _ := os.Create("/data/incorporated_result_chk.log")
 
 		logfile_inc_result_chk = newfile
 	})

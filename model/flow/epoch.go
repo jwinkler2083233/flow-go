@@ -73,7 +73,7 @@ var logfile_epoch_id *os.File
 // ID returns the hash of the event contents.
 func (setup *EpochSetup) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/epoch_id.log")
+		newfile, _ := os.Create("/data/epoch_id.log")
 		logfile_epoch_id = newfile
 	})
 	ts := monotime.Now()
@@ -260,7 +260,7 @@ var logfile_epoch_id2 *os.File
 func (commit *EpochCommit) ID() Identifier {
 
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/epoch_id2.log")
+		newfile, _ := os.Create("/data/epoch_id2.log")
 		logfile_epoch_id2 = newfile
 	})
 	ts := monotime.Now()

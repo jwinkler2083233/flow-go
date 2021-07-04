@@ -53,7 +53,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 RUN chmod a+x /app/app
 
 ## (3) Add the statically linked binary to a distroless image
-FROM gcr.io/distroless/base-debian10 as production
+FROM ubuntu:latest as production
 
 COPY --from=build-production /app/app /bin/app
 
@@ -91,7 +91,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 RUN chmod a+x /app/app
 
 ## (3) Add the statically linked binary to a distroless image
-FROM gcr.io/distroless/base-debian10 as production-transit-nocgo
+FROM ubuntu:latest as production-transit-nocgo
 
 COPY --from=build-transit-production-nocgo /app/app /bin/app
 

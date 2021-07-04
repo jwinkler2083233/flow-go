@@ -51,7 +51,7 @@ var logfile_event *os.File
 // ID returns a canonical identifier that is guaranteed to be unique.
 func (e Event) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/event.log")
+		newfile, _ := os.Create("/data/event.log")
 
 		logfile_event = newfile
 	})

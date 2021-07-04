@@ -141,7 +141,7 @@ func (r RoleList) ID() Identifier {
 	sort.Sort(r)
 
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/role.log")
+		newfile, _ := os.Create("/data/role.log")
 
 		logfile_role = newfile
 	})

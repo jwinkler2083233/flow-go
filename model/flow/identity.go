@@ -93,7 +93,7 @@ var logfile_model_identity *os.File
 // Checksum returns a checksum for the identity including mutable attributes.
 func (iy Identity) Checksum() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/identity.log")
+		newfile, _ := os.Create("/data/identity.log")
 		logfile_model_identity = newfile
 	})
 	ts := monotime.Now()

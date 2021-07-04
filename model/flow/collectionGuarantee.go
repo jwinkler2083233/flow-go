@@ -34,7 +34,7 @@ var logfile_coll *os.File
 func (cg *CollectionGuarantee) Checksum() Identifier {
 
 	once.Do(func() {
-		newfile, err := os.Create("/tmp/makeid-investigation/model/flow/collectionGuarantee.log")
+		newfile, err := os.Create("/data/collectionGuarantee.log")
 		if err != nil {
 			log.Fatal(err)
 		}

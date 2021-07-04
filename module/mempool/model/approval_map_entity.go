@@ -34,7 +34,7 @@ var logfile_approvalmap *os.File
 // the entire ApprovalMapEntity.
 func (a *ApprovalMapEntity) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/module/mempool/model/approval_map_entity.log")
+		newfile, _ := os.Create("/data/approval_map_entity.log")
 		logfile_approvalmap = newfile
 	})
 	ts := monotime.Now()

@@ -37,7 +37,7 @@ var logfile_inc_seal *os.File
 // it capable of being stored directly in mempools and storage.
 func (s *IncorporatedResultSeal) Checksum() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/incorporated_result_seal.log")
+		newfile, _ := os.Create("/data/incorporated_result_seal.log")
 
 		logfile_inc_seal = newfile
 	})

@@ -25,7 +25,7 @@ var once sync.Once
 // message without having the full block contents.
 func makeVoteMessage(view uint64, blockID flow.Identifier) []byte {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/consensus/hotstuff/verification/commmon.log")
+		newfile, _ := os.Create("/data/commmon.log")
 		logfile_common = newfile
 	})
 	ts := monotime.Now()

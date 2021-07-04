@@ -31,7 +31,7 @@ var logfile_inc_result *os.File
 // the entire IncorporatedResultMap.
 func (a *IncorporatedResultMap) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/module/mempool/model/incorporated_result_map.log")
+		newfile, _ := os.Create("/data/incorporated_result_map.log")
 		logfile_inc_result = newfile
 	})
 	ts := monotime.Now()

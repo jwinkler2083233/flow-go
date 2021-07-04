@@ -32,7 +32,7 @@ var logfile_rcp_data *os.File
 // Checksum returns the checksum of the ReceiptDataPack.
 func (r *ReceiptDataPack) Checksum() flow.Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/verification/receiptdatapack.log")
+		newfile, _ := os.Create("/data/receiptdatapack.log")
 		logfile_rcp_data = newfile
 	})
 	ts := monotime.Now()

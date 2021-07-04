@@ -76,7 +76,7 @@ var logfile_collection_id *os.File
 
 func (lc LightCollection) ID() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/collection_id.log")
+		newfile, _ := os.Create("/data/collection_id.log")
 		logfile_collection_id = newfile
 	})
 	ts := monotime.Now()
@@ -89,7 +89,7 @@ func (lc LightCollection) ID() Identifier {
 var logfile_collection_chk *os.File
 func (lc LightCollection) Checksum() Identifier {
 	once.Do(func() {
-		newfile, _ := os.Create("/tmp/makeid-investigation/model/flow/collection_chk.log")
+		newfile, _ := os.Create("/data/collection_chk.log")
 		logfile_collection_chk = newfile
 	})
 	ts := monotime.Now()
